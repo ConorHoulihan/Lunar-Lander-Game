@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Lunar Lander</title>
+
+
+
+<!-- Stylesheet -->
+<style>
+.landscape{
+position: absolute;
+}
+
+.lander{
+position: absolute;
+top: 10;
+left: 250;
+}
+.flame{
+position: absolute;
+top: 76;
+left: 250;
+}
+
+.controls{
+position: absolute;
+color: white;
+visibility: hidden;
+}
+
+.gameStart{
+	position: absolute;
+	top: 50;
+    background-color: transparent;
+	color: white;
+    width: 300px;
+    border: 10px red;
+    padding: 25px;
+    margin: 100px;
+}
+
+.startButton{
+margin-left:120px;
+}
+</style>
+
+
+
+<!-- Javascript -->
+<script>
+
+var timeout;
+var flameX = 250;
+var flameY = 76;
+var landerX = 250;
+var landerY = 10;
+var lander = document.getElementById('lander');
+var boosterOn = false;
+
+function moveY(){ 
+	document.getElementById('lander').style.top=landerY + "px";
+	document.getElementById('flame').style.top=flameY + "px";
+	landerY = landerY + 1;
+	flameY = flameY + 1;
+	}
+	
+function moveX(){ 
+	document.getElementById('lander').style.left=landerX + "px";
+	document.getElementById('flame').style.left=flameX + "px";
+	landerX = landerX + 1;
+	flameX = flameX + 1;
+	}
+
+function game(){
+	if (landerY > 282)
+		{
+			clearTimeout(timeout);
+		}
+	else if(landerX == 520)
+		{
+			landerX = 0;
+			flameX = 0; 
+			timeout = setTimeout("moveY(); game(); moveX();", 10);
+		}	
+	else
+		{
+			timeout = setTimeout("moveY(); game(); moveX();", 10);
+		}
+	}
+	
+function hide() 
+{
+    gameStart.style.visibility="hidden";  
+	controls.style.visibility="visible";
+}
+
+function thrust()
+{
+	boosterOn = true;
+}
+function noThrust()
+{
+	boosterOn = false;
+}
+	while(boosterOn = true)
+	{
+	document.getElementById('lander').style.top=landerY + "px";
+	document.getElementById('flame').style.top=flameY + "px";
+	landerY = landerY - .75;
+	flameY = flameY - .75;
+	}
+</script>
+</head>
+
+
+<!-- Main -->
+<body>
+
+<div class = "landscape" id = "landscape">
+<img src = "images/landscape.jpg">
+</div>
+
+<div class = "lander" id = "lander">
+<img id = "l" src = "images/lander.png">
+</div>
+
+<div class = "flame" id = "flame">
+<img id = "f"  src = "images/flame.png">
+</div>
+
+
+<div class = "controls" id = "controls">
+<p>X Velocity: 0</p>
+<p>Y Velocity: 0</p>
+<p>Fuel: 200</p>
+<button onmouseover="thrust();" onmouseout="noThrust";>Boost!</button>
+</div>
+
+
+<div id = "gameStart" class = "gameStart">
+<h3 style = "text-align: center;">Lunar Lander!</h3>
+<h4>You must land on the yellow rectangle at less than 3 m/s before your fuel runs out!</h4>
+<button class = "startButton" onclick="hide(); game()">Start!</button>
+</div>	
+
+
+</body>
+</html>
